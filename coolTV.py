@@ -8,20 +8,16 @@ class CoolTelevision(Television):
 
     def channel_up(self) -> None:
         super().channel_down()
-        if self.__channelList:
-            self.__channelList = False
+        self.__channelList = False
 
     def channel_down(self) -> None:
         super().channel_down()
-        if self.__channelList:
-            self.__channelList = False
+        self.__channelList = False
 
     def power(self) -> None:
         super().power()
-        if self.__channelList:
-            self.__channelList = False
-        if self.__settings:
-            self.__settings = False
+        self.__channelList = False
+        self.__settings = False
 
     def settings(self) -> None:
         if not self.__settings:
@@ -33,6 +29,5 @@ class CoolTelevision(Television):
 
 
     def exit(self) -> None:
-        if self.__channelList or self.__settings:
-            self.__channelList = False
-            self.__settings = False
+        self.__channelList = False
+        self.__settings = False
