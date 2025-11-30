@@ -9,7 +9,7 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
         super().__init__()
         self.setupUi(self)
 
-        tenna = Television()
+        tenna = CoolTelevision()
 
     def update(self):
         #updates the visual gui
