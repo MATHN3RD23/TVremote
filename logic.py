@@ -25,6 +25,10 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
         self.sevenButton.clicked.connect(self.clicked_7)
         self.eightButton.clicked.connect(self.clicked_8)
         self.nineButton.clicked.connect(self.clicked_9)
+        self.settingsButton.clicked.connect(self.click_settings)
+        self.ChListButton.clicked.connect(self.click_chList)
+        self.ExitButton.clicked.connect(self.click_back)
+        self.ChSlider.valueChanged.connect(self.slider_change)
 
 
     def update(self):
@@ -88,6 +92,22 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
         self.update()
     def clicked_9(self):
         self.__tenna.setChannel(9)
+        self.update()
+
+    def click_chList(self):
+        self.__tenna.channel_list()
+        self.update()
+
+    def click_settings(self):
+        self.__tenna.settings()
+        self.update()
+
+    def click_back(self):
+        self.__tenna.exit()
+        self.update()
+
+    def slider_change(self):
+        self.__tenna.setChannel(self.ChSlider.sliderPosition())
         self.update()
 
 
