@@ -15,10 +15,23 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
         self.CHdownButton.clicked.connect(self.clicked_CHdown)
         self.VOLupButton.clicked.connect(self.clicked_volUp)
         self.VOLdownButton.clicked.connect(self.clicked_volDown)
+        self.powerButton.clicked.connect(self.clicked_power)
+        self.oneButton.clicked.connect(self.clicked_1)
+        self.twoButton.clicked.connect(self.clicked_2)
+        self.threeButton.clicked.connect(self.clicked_3)
+        self.fourButton.clicked.connect(self.clicked_4)
+        self.fiveButton.clicked.connect(self.clicked_5)
+        self.sixButton.clicked.connect(self.clicked_6)
+        self.sevenButton.clicked.connect(self.clicked_7)
+        self.eightButton.clicked.connect(self.clicked_8)
+        self.nineButton.clicked.connect(self.clicked_9)
 
 
     def update(self):
-        self.ChSlider.setSliderPosition(int(self.__tenna.getChannel()))
+        if self.__tenna.getStatus():
+            self.ChSlider.setSliderPosition(int(self.__tenna.getChannel()))
+        else:
+            self.ChSlider.setSliderPosition(0)
         return
 
     def clicked_mute(self):
@@ -41,6 +54,42 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
     def clicked_volUp(self):
         self.__tenna.volume_up()
         self.update()
+
+    def clicked_power(self):
+        self.__tenna.power()
+        self.update()
+
+    def clicked_0(self):
+        self.__tenna.setChannel(0)
+        self.update()
+    def clicked_1(self):
+        self.__tenna.setChannel(1)
+        self.update()
+    def clicked_2(self):
+        self.__tenna.setChannel(2)
+        self.update()
+    def clicked_3(self):
+        self.__tenna.setChannel(3)
+        self.update()
+    def clicked_4(self):
+        self.__tenna.setChannel(4)
+        self.update()
+    def clicked_5(self):
+        self.__tenna.setChannel(5)
+        self.update()
+    def clicked_6(self):
+        self.__tenna.setChannel(6)
+        self.update()
+    def clicked_7(self):
+        self.__tenna.setChannel(7)
+        self.update()
+    def clicked_8(self):
+        self.__tenna.setChannel(8)
+        self.update()
+    def clicked_9(self):
+        self.__tenna.setChannel(9)
+        self.update()
+
 
 
 

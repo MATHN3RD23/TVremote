@@ -20,6 +20,12 @@ class Television:
     #added code-----
     def getChannel(self) -> int:
         return self.__channel
+
+    def getStatus(self):
+        return self.__status
+
+    def setChannel(self, channel: int) -> None:
+        self.__channel = channel
     #end added code----
 
     def power(self)-> None:

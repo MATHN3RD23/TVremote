@@ -12,6 +12,8 @@ class CoolTelevision(Television):
 
     def channel_down(self) -> None:
         super().channel_down()
+        if self.getChannel() > self.MAX_CHANNEL:
+            self.setChannel(self.MAX_CHANNEL)
         self.__channelList = False
 
     def power(self) -> None:
