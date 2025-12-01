@@ -7,7 +7,7 @@ class CoolTelevision(Television):
         self.__channelList = False
 
     def channel_up(self) -> None:
-        super().channel_down()
+        super().channel_up()
         self.__channelList = False
 
     def channel_down(self) -> None:

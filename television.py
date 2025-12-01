@@ -17,6 +17,11 @@ class Television:
         self.__volume = Television.MIN_VOLUME
         self.__channel = Television.MIN_CHANNEL
 
+    #added code-----
+    def getChannel(self) -> int:
+        return self.__channel
+    #end added code----
+
     def power(self)-> None:
         """
         Method switches the current power status
