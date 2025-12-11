@@ -26,6 +26,13 @@ class Television:
 
     def setChannel(self, channel: int) -> None:
         self.__channel = channel
+
+    def getVolume(self) -> int:
+        return self.__volume
+
+    def getMuted(self) -> bool:
+        return self.__muted
+
     #end added code----
 
     def power(self)-> None:

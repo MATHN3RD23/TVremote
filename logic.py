@@ -1,7 +1,9 @@
-from PyQt6.QtGui import QPixmap, QImage, QImageReader
+from PyQt6.QtGui import QPixmap, QBrush, QFont
 from PyQt6.QtWidgets import *
+from PyQt6.QtCore import Qt
 from gui import *
 from coolTV import *
+
 
 
 
@@ -30,8 +32,6 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
         self.ChListButton.clicked.connect(self.click_chList)
         self.ExitButton.clicked.connect(self.click_back)
         self.ChSlider.valueChanged.connect(self.slider_change)
-
-        QImageReader.setAllocationLimit(0)
 
         self.static_scene = QGraphicsScene(0,0,250,250)
         pixmap_static = QPixmap("C:/Users/emool/OneDrive/Desktop/CS2/TVremote/static.png")
@@ -67,6 +67,15 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
         pixmap_setting_item = self.setting_scene.addPixmap(pixmap_setting)
         pixmap_setting_item.setPos(0, 0)
 
+        self.volume_bar = QGraphicsRectItem(0, 0, int(self.__tenna.getVolume() * 10), 10)
+        brush = QBrush(Qt.GlobalColor.black)
+        self.volume_bar.setBrush(brush)
+        self.setting_scene.addItem(self.volume_bar)
+
+        self.ch_text = QGraphicsTextItem("")
+        self.setting_scene.addItem(self.ch_text)
+
+
         self.empty_scene = QGraphicsScene(0, 0, 250, 250)
 
 
@@ -75,10 +84,28 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
 
 
     def settings_scene_setup(self):
+        self.setting_scene.clear()
 
+        pixmap_setting = QPixmap("C:/Users/emool/OneDrive/Desktop/CS2/TVremote/setting.png")
+        pixmap_setting_item = self.setting_scene.addPixmap(pixmap_setting)
+        pixmap_setting_item.setPos(0, 0)
 
-        volume_bar = qDrawPlainRect(0, 0, self.__tenna.getVolume() * 10, 10)
-        self.setting_scene.addItem(volume_bar)
+        if self.__tenna.getMuted():
+            self.volume_bar = QGraphicsRectItem(30, 80, int(0 * 50), 30)
+            brush = QBrush(Qt.GlobalColor.black)
+            self.volume_bar.setBrush(brush)
+            self.setting_scene.addItem(self.volume_bar)
+        else:
+            self.volume_bar = QGraphicsRectItem(30, 80, int(self.__tenna.getVolume() * 50) + 50, 30)
+            brush = QBrush(Qt.GlobalColor.black)
+            self.volume_bar.setBrush(brush)
+            self.setting_scene.addItem(self.volume_bar)
+
+        self.ch_text = QGraphicsTextItem(str(self.__tenna.getChannel()))
+        self.ch_text.setPos(30, 180)
+        self.ch_text.setDefaultTextColor(Qt.GlobalColor.black)
+        self.ch_text.setFont(QFont("Helvetica", 25, 1, False))
+        self.setting_scene.addItem(self.ch_text)
 
 
     def update(self):
@@ -103,7 +130,7 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
             elif self.__tenna.getChannelList():
                 self.graphicsView.setScene(self.chList_scene)
             elif self.__tenna.getSettings():
-                #self.settings_scene_setup()
+                self.settings_scene_setup()
                 self.graphicsView.setScene(self.setting_scene)
         else:
             self.graphicsView.setScene(self.empty_scene)

@@ -12,9 +12,6 @@ class CoolTelevision(Television):
     def getSettings(self) -> bool:
         return self.__settings
 
-    def getVolume(self) -> int:
-        return self.__volume
-
     def channel_up(self) -> None:
         super().channel_up()
         self.__channelList = False
