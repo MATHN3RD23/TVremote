@@ -57,10 +57,28 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
         pixmap_ad_item = self.ad_scene.addPixmap(pixmap_ad)
         pixmap_ad_item.setPos(0, 0)
 
+        self.chList_scene = QGraphicsScene(0, 0, 250, 250)
+        pixmap_chL = QPixmap("C:/Users/emool/OneDrive/Desktop/CS2/TVremote/chList.png")
+        pixmap_chL_item = self.chList_scene.addPixmap(pixmap_chL)
+        pixmap_chL_item.setPos(0, 0)
+
+        self.setting_scene = QGraphicsScene(0, 0, 250, 250)
+        pixmap_setting = QPixmap("C:/Users/emool/OneDrive/Desktop/CS2/TVremote/setting.png")
+        pixmap_setting_item = self.setting_scene.addPixmap(pixmap_setting)
+        pixmap_setting_item.setPos(0, 0)
+
         self.empty_scene = QGraphicsScene(0, 0, 250, 250)
+
 
         self.graphicsView.setScene(self.empty_scene)
         self.graphicsView.show()
+
+
+    def settings_scene_setup(self):
+
+
+        volume_bar = qDrawPlainRect(0, 0, self.__tenna.getVolume() * 10, 10)
+        self.setting_scene.addItem(volume_bar)
 
 
     def update(self):
@@ -70,22 +88,26 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
             self.ChSlider.setSliderPosition(0)
 
         if self.__tenna.getStatus():
-            if self.__tenna.getChannel() == 0:
-                self.graphicsView.setScene(self.ad_scene)
-            elif self.__tenna.getChannel() == 1:
-                self.graphicsView.setScene(self.soap_scene)
-            elif self.__tenna.getChannel() == 2:
-                self.graphicsView.setScene(self.cartoon_scene)
-            elif self.__tenna.getChannel() == 3:
-                self.graphicsView.setScene(self.news_scene)
-            else:
-                self.graphicsView.setScene(self.static_scene)
+            if not self.__tenna.getChannelList() and not self.__tenna.getSettings():
+                if self.__tenna.getChannel() == 3:
+                    self.graphicsView.setScene(self.ad_scene)
+                elif self.__tenna.getChannel() == 2:
+                    self.graphicsView.setScene(self.soap_scene)
+                elif self.__tenna.getChannel() == 1:
+                    self.graphicsView.setScene(self.cartoon_scene)
+                elif self.__tenna.getChannel() == 0:
+                    self.graphicsView.setScene(self.news_scene)
+                else:
+                    self.graphicsView.setScene(self.static_scene)
+
+            elif self.__tenna.getChannelList():
+                self.graphicsView.setScene(self.chList_scene)
+            elif self.__tenna.getSettings():
+                #self.settings_scene_setup()
+                self.graphicsView.setScene(self.setting_scene)
         else:
             self.graphicsView.setScene(self.empty_scene)
 
-
-
-        return
 
     def clicked_mute(self):
         self.__tenna.mute()

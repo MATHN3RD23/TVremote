@@ -6,6 +6,15 @@ class CoolTelevision(Television):
         self.__settings = False
         self.__channelList = False
 
+    def getChannelList(self) -> bool:
+        return self.__channelList
+
+    def getSettings(self) -> bool:
+        return self.__settings
+
+    def getVolume(self) -> int:
+        return self.__volume
+
     def channel_up(self) -> None:
         super().channel_up()
         self.__channelList = False
