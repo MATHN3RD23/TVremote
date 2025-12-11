@@ -8,7 +8,7 @@ from coolTV import *
 """
 NOTE: the images used are implemented with absolute path and may need re-worked with implementing
 lines of occurance:
-42, 46, 51, 56, 61, 66, 71, 94
+42, 46, 51, 56, 61, 66, 71, 98
 """
 
 
@@ -88,7 +88,11 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
         self.graphicsView.show()
 
 
-    def settings_scene_setup(self):
+    def settings_scene_setup(self) -> None:
+        """
+        Method to set up setting screen
+        """
+        #this way the setting screen can shift to display current settings
         self.setting_scene.clear()
 
         pixmap_setting = QPixmap("C:/Users/emool/OneDrive/Desktop/CS2/TVremote/setting.png")
@@ -113,7 +117,10 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
         self.setting_scene.addItem(self.ch_text)
 
 
-    def update(self):
+    def update(self) -> None:
+        """
+        updates all widgets to display current information
+        """
         if self.__tenna.getStatus():
             self.ChSlider.setSliderPosition(int(self.__tenna.getChannel()))
         else:
@@ -141,75 +148,74 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
             self.graphicsView.setScene(self.empty_scene)
 
 
-    def clicked_mute(self):
+    def clicked_mute(self) -> None:
         self.__tenna.mute()
         self.update()
-        return
 
-    def clicked_CHup(self):
+    def clicked_CHup(self) -> None:
         self.__tenna.channel_up()
         self.update()
 
-    def clicked_CHdown(self):
+    def clicked_CHdown(self) -> None:
         self.__tenna.channel_down()
         self.update()
 
-    def clicked_volDown(self):
+    def clicked_volDown(self) -> None:
         self.__tenna.volume_down()
         self.update()
 
-    def clicked_volUp(self):
+    def clicked_volUp(self) -> None:
         self.__tenna.volume_up()
         self.update()
 
-    def clicked_power(self):
+    def clicked_power(self) -> None:
         self.__tenna.power()
         self.update()
 
-    def clicked_0(self):
+    def clicked_0(self) -> None:
         self.__tenna.setChannel(0)
         self.update()
-    def clicked_1(self):
+    def clicked_1(self) -> None:
         self.__tenna.setChannel(1)
         self.update()
-    def clicked_2(self):
+    def clicked_2(self) -> None:
         self.__tenna.setChannel(2)
         self.update()
-    def clicked_3(self):
+    def clicked_3(self) -> None:
         self.__tenna.setChannel(3)
         self.update()
-    def clicked_4(self):
+    def clicked_4(self) -> None:
         self.__tenna.setChannel(4)
         self.update()
-    def clicked_5(self):
+    def clicked_5(self) -> None:
         self.__tenna.setChannel(5)
         self.update()
-    def clicked_6(self):
+    def clicked_6(self) -> None:
         self.__tenna.setChannel(6)
         self.update()
-    def clicked_7(self):
+    def clicked_7(self) -> None:
         self.__tenna.setChannel(7)
         self.update()
-    def clicked_8(self):
+    def clicked_8(self) -> None:
         self.__tenna.setChannel(8)
         self.update()
-    def clicked_9(self):
+    def clicked_9(self) -> None:
         self.__tenna.setChannel(9)
         self.update()
 
-    def click_chList(self):
+    def click_chList(self) -> None:
         self.__tenna.channel_list()
         self.update()
 
-    def click_settings(self):
+    def click_settings(self) -> None:
         self.__tenna.settings()
         self.update()
 
-    def click_back(self):
+    def click_back(self) -> None:
         self.__tenna.exit()
         self.update()
 
-    def slider_change(self):
+    def slider_change(self) -> None:
         self.__tenna.setChannel(self.ChSlider.sliderPosition())
         self.update()
 
