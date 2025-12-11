@@ -1,4 +1,4 @@
-from PyQt6.QtGui import QPixmap, QImage
+from PyQt6.QtGui import QPixmap, QImage, QImageReader
 from PyQt6.QtWidgets import *
 from gui import *
 from coolTV import *
@@ -31,32 +31,35 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
         self.ExitButton.clicked.connect(self.click_back)
         self.ChSlider.valueChanged.connect(self.slider_change)
 
-        self.static_scene = QGraphicsScene()
-        pixmap_static = QPixmap("static.png")
-        staticImage = QImage("static.png")
-        pixmap_static.convertFromImage(staticImage)
-        pixmap_static_item = self.static_scene.addPixmap(pixmap_static)
-        pixmap_static_item.setPos(0,0)
+        QImageReader.setAllocationLimit(0)
 
-        circle = QGraphicsEllipseItem(0, 0, 250, 250)
-        self.static_scene.addItem(circle)
+        self.static_scene = QGraphicsScene(0,0,250,250)
+        pixmap_static = QPixmap("C:/Users/emool/OneDrive/Desktop/CS2/TVremote/static.png")
+        pixmap_static_item = self.static_scene.addPixmap(pixmap_static)
 
         self.news_scene = QGraphicsScene(0, 0, 250, 250)
-        pixmap_news = QPixmap("news.png")
-        pixmap_news_item = self.static_scene.addPixmap(pixmap_news)
+        pixmap_news = QPixmap("C:/Users/emool/OneDrive/Desktop/CS2/TVremote/news.png")
+        pixmap_news_item = self.news_scene.addPixmap(pixmap_news)
         pixmap_news_item.setPos(0, 0)
 
         self.soap_scene = QGraphicsScene(0, 0, 250, 250)
-        pixmap_soapOpera = QPixmap("soapOpera.png")
-        pixmap_soapOpera_item = self.static_scene.addPixmap(pixmap_soapOpera)
+        pixmap_soapOpera = QPixmap("C:/Users/emool/OneDrive/Desktop/CS2/TVremote/soapOpera.png")
+        pixmap_soapOpera_item = self.soap_scene.addPixmap(pixmap_soapOpera)
         pixmap_soapOpera_item.setPos(0, 0)
 
         self.cartoon_scene = QGraphicsScene(0, 0, 250, 250)
-        pixmap_cartoon = QPixmap("cartoon.png")
-        pixmap_cartoon_item = self.static_scene.addPixmap(pixmap_cartoon)
+        pixmap_cartoon = QPixmap("C:/Users/emool/OneDrive/Desktop/CS2/TVremote/cartoon.png")
+        pixmap_cartoon_item = self.cartoon_scene.addPixmap(pixmap_cartoon)
         pixmap_cartoon_item.setPos(0, 0)
 
-        self.graphicsView.setScene(self.soap_scene)
+        self.ad_scene = QGraphicsScene(0, 0, 250, 250)
+        pixmap_ad = QPixmap("C:/Users/emool/OneDrive/Desktop/CS2/TVremote/ad.png")
+        pixmap_ad_item = self.ad_scene.addPixmap(pixmap_ad)
+        pixmap_ad_item.setPos(0, 0)
+
+        self.empty_scene = QGraphicsScene(0, 0, 250, 250)
+
+        self.graphicsView.setScene(self.empty_scene)
         self.graphicsView.show()
 
 
@@ -68,13 +71,17 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
 
         if self.__tenna.getStatus():
             if self.__tenna.getChannel() == 0:
-                self.graphicsView.setScene(self.static_scene)
-            if self.__tenna.getChannel() == 1:
+                self.graphicsView.setScene(self.ad_scene)
+            elif self.__tenna.getChannel() == 1:
                 self.graphicsView.setScene(self.soap_scene)
-            if self.__tenna.getChannel() == 2:
+            elif self.__tenna.getChannel() == 2:
                 self.graphicsView.setScene(self.cartoon_scene)
-            if self.__tenna.getChannel() == 3:
+            elif self.__tenna.getChannel() == 3:
                 self.graphicsView.setScene(self.news_scene)
+            else:
+                self.graphicsView.setScene(self.static_scene)
+        else:
+            self.graphicsView.setScene(self.empty_scene)
 
 
 
