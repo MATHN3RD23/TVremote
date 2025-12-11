@@ -5,6 +5,11 @@ from gui import *
 from coolTV import *
 
 
+"""
+NOTE: the images used are implemented with absolute path and may need re-worked with implementing
+lines of occurance:
+42, 46, 51, 56, 61, 66, 71, 94
+"""
 
 
 class Logic(QMainWindow, Ui_TVremoteWindow):
