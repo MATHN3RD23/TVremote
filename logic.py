@@ -1,3 +1,4 @@
+from PyQt6.QtGui import QPixmap, QImage
 from PyQt6.QtWidgets import *
 from gui import *
 from coolTV import *
@@ -30,12 +31,53 @@ class Logic(QMainWindow, Ui_TVremoteWindow):
         self.ExitButton.clicked.connect(self.click_back)
         self.ChSlider.valueChanged.connect(self.slider_change)
 
+        self.static_scene = QGraphicsScene()
+        pixmap_static = QPixmap("static.png")
+        staticImage = QImage("static.png")
+        pixmap_static.convertFromImage(staticImage)
+        pixmap_static_item = self.static_scene.addPixmap(pixmap_static)
+        pixmap_static_item.setPos(0,0)
+
+        circle = QGraphicsEllipseItem(0, 0, 250, 250)
+        self.static_scene.addItem(circle)
+
+        self.news_scene = QGraphicsScene(0, 0, 250, 250)
+        pixmap_news = QPixmap("news.png")
+        pixmap_news_item = self.static_scene.addPixmap(pixmap_news)
+        pixmap_news_item.setPos(0, 0)
+
+        self.soap_scene = QGraphicsScene(0, 0, 250, 250)
+        pixmap_soapOpera = QPixmap("soapOpera.png")
+        pixmap_soapOpera_item = self.static_scene.addPixmap(pixmap_soapOpera)
+        pixmap_soapOpera_item.setPos(0, 0)
+
+        self.cartoon_scene = QGraphicsScene(0, 0, 250, 250)
+        pixmap_cartoon = QPixmap("cartoon.png")
+        pixmap_cartoon_item = self.static_scene.addPixmap(pixmap_cartoon)
+        pixmap_cartoon_item.setPos(0, 0)
+
+        self.graphicsView.setScene(self.soap_scene)
+        self.graphicsView.show()
+
 
     def update(self):
         if self.__tenna.getStatus():
             self.ChSlider.setSliderPosition(int(self.__tenna.getChannel()))
         else:
             self.ChSlider.setSliderPosition(0)
+
+        if self.__tenna.getStatus():
+            if self.__tenna.getChannel() == 0:
+                self.graphicsView.setScene(self.static_scene)
+            if self.__tenna.getChannel() == 1:
+                self.graphicsView.setScene(self.soap_scene)
+            if self.__tenna.getChannel() == 2:
+                self.graphicsView.setScene(self.cartoon_scene)
+            if self.__tenna.getChannel() == 3:
+                self.graphicsView.setScene(self.news_scene)
+
+
+
         return
 
     def clicked_mute(self):
